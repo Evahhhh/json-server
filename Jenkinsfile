@@ -7,14 +7,16 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "ghcr.io/evahhh/json-server"
+        VERSION = "build-${env.BUILD_NUMBER}"
     }
 
     stages {
-        stage('Clone') {
-            steps {
-                git 'https://github.com/Evahhhh/json-server.git'
-            }
-        }
+        stage('Clone') { 
+            steps { 
+                echo "Clone repo" 
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'gitToken', url: 'https://github.com/Evahhhh/json-server']])
+            } 
+        } 
 
         stage('Install dependencies') {
             steps {
@@ -35,11 +37,9 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            steps {
-                script {
-                    def buildNumber = env.BUILD_NUMBER
-                    sh "docker build -t ${DOCKER_IMAGE}:build-${buildNumber} ."
-                }
+            steps { 
+              echo "Build Docker image"
+              sh "docker build -t ${IMAGE}:${VERSION} ."
             }
         }
 
@@ -48,7 +48,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
                     sh """
                     echo $GITHUB_TOKEN | docker login ghcr.io -u evahhh --password-stdin
-                    docker push ${DOCKER_IMAGE}:build-${env.BUILD_NUMBER}
+                    docker push ${DOCKER_IMAGE}:${VERSION}
                     """
                 }
             }
