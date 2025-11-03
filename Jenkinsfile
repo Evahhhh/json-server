@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs "nodejs"
+    }
+
     environment {
         DOCKER_IMAGE = "ghcr.io/evahhh/json-server"
     }
