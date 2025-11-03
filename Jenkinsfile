@@ -14,7 +14,7 @@ pipeline {
         stage('Clone') { 
             steps { 
                 echo "Clone repo" 
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'gitToken', url: 'https://github.com/Evahhhh/json-server']])
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '95bcb5db-9db0-4e86-95b7-21b76b6bf690', url: 'https://github.com/Evahhhh/json-server']])
             } 
         } 
 
@@ -45,10 +45,10 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
+                withCredentials([usernamePassword(credentialsId: '95bcb5db-9db0-4e86-95b7-21b76b6bf690', usernameVariable: 'GH_USER', passwordVariable: 'GH_TOKEN')]) {
                     sh """
-                    echo $GITHUB_TOKEN | docker login ghcr.io -u evahhh --password-stdin
-                    docker push ${DOCKER_IMAGE}:${VERSION}
+                        echo $GH_TOKEN | docker login ghcr.io -u $GH_USER --password-stdin
+                        docker push ${IMAGE}:${VERSION}
                     """
                 }
             }
