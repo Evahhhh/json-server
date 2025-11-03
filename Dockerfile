@@ -5,9 +5,8 @@ WORKDIR /app
 
 # Copier package.json + package-lock.json pour installer dépendances
 COPY package*.json ./
-ENV HUSKY=0
 
-RUN npm install --production
+RUN npm install
 
 # Copier le code
 COPY . .
