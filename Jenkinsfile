@@ -57,10 +57,12 @@ pipeline {
         stage('Tag Git Repo') {
             steps {
                 script {
-                    git config user.name "Jenkins CI"
-                    git config user.email "offredi.pro@gmail.com"
-                    sh "git tag -a v${env.BUILD_NUMBER} -m 'Build ${env.BUILD_NUMBER}'"
-                    sh "git push origin --tags"
+                    sh """
+                        git config user.name "Jenkins CI"
+                        git config user.email "offredi.pro@gmail.com"
+                        git tag -a v${env.BUILD_NUMBER} -m 'Build ${env.BUILD_NUMBER}'
+                        git push origin --tags
+                    """
                 }
             }
         }
