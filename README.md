@@ -1,4 +1,4 @@
-# JSON-Server project
+# JSON-Server
 
 [![Node.js CI](https://github.com/typicode/json-server/actions/workflows/node.js.yml/badge.svg)](https://github.com/typicode/json-server/actions/workflows/node.js.yml)
 
