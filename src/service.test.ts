@@ -77,7 +77,7 @@ await test('constructor', () => {
 await test('findById', () => {
   reset()
   if (!Array.isArray(db.data?.[POSTS]))
-    throw new Error('posts should be an array !')
+    throw new Error('posts should be an array')
   assert.deepEqual(service.findById(POSTS, '1', {}), db.data?.[POSTS]?.[0])
   assert.equal(service.findById(POSTS, UNKNOWN_ID, {}), undefined)
   assert.deepEqual(service.findById(POSTS, '1', { _embed: ['comments'] }), {
