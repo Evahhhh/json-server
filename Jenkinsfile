@@ -57,15 +57,15 @@ pipeline {
         stage('Tag Git Repo') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'gitToken', usernameVariable: 'GH_USER', passwordVariable: 'GH_TOKEN')]) {
-                    sh '''
+                    sh """
                         git config user.name "Jenkins CI"
                         git config user.email "offredi.pro@gmail.com"
-                        git tag -a v${BUILD_NUMBER} -m "Build ${BUILD_NUMBER}"
+                        git tag -a v${env.BUILD_NUMBER} -m "Build ${env.BUILD_NUMBER}"
 
-                        git remote set-url origin https://${GH_USER}:${GH_TOKEN}@github.com/Evahhhh/json-server.git
+                        git remote set-url origin https://\$GH_USER:\$GH_TOKEN@github.com/Evahhhh/json-server.git
 
                         git push origin --tags
-                    '''
+                    """
                 }
             }
         }
