@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = "ghcr.io/evahhh/json-server"
+        DOCKER_IMAGE = "ghcr.io/Evahhhh/json-server"
         VERSION = "build-${env.BUILD_NUMBER}"
     }
 
